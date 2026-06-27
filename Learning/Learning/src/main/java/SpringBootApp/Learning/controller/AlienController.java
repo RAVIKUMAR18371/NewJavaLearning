@@ -43,10 +43,14 @@ public class AlienController {
 
     // Now if i need to update the details inside the Code what should i do next
     @PutMapping("/{id}")
-    public Alien updateAlien(@RequestBody Alien alien,@PathVariable String id, @RequestBody String entity) {
-        // I am setting the ID from my side
+    public Alien updateAlien(@RequestBody Alien alien,@PathVariable int id, @RequestBody String entity) {
+        // I am setting the ID for the incoming alien to ensure that i update the correct record
+        alien.setId(id);
+
+        // In spring Data JPA, .save() will UPDATE the record if the ID already exist in the database
+        repo.save(alien);
         
-        return entity;
+        return alien;
     }
 
     
